@@ -1,0 +1,19 @@
+# Eclipse
+.metadata/
+.classpath
+.project
+.settings/
+
+# Maven
+target/
+
+# Spring Boot
+*.jar
+
+# Whisper Binaries und Modelle
+whisper.cpp/build/
+whisper.cpp/models/
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
