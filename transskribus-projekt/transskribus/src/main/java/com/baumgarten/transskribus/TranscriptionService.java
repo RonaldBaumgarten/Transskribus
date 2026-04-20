@@ -3,6 +3,8 @@ package com.baumgarten.transskribus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.baumgarten.transskribus.config.WhisperProperties;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +19,7 @@ public class TranscriptionService {
         this.props = props;
     }
 
-    public String transcribe(MultipartFile audioFile) throws IOException, InterruptedException {
+    public String transcribe(MultipartFile audioFile, String language) throws IOException, InterruptedException {
         // Temporäre Dateien anlegen
         File tempInput = File.createTempFile("audio-input-", getExtension(audioFile.getOriginalFilename()));
         File tempWav = File.createTempFile("audio-wav-", ".wav");
@@ -25,7 +27,7 @@ public class TranscriptionService {
         try {
             audioFile.transferTo(tempInput);
 
-            // Schritt 1: ffmpeg → 16kHz WAV
+            // Schritt 1: ffmpeg - speichern als 16kHz WAV
             runProcess(List.of(
                 props.getFfmpegPath(),
                 "-y",
@@ -36,12 +38,12 @@ public class TranscriptionService {
                 tempWav.getAbsolutePath()
             ));
 
-            // Schritt 2: whisper-cli transkribieren
+            // Schritt 2: whisper-cli  - WAV-file transkribieren
             String output = runProcessAndCapture(List.of(
                 props.getBinaryPath(),
                 "-m", props.getModelPath(),
                 "-f", tempWav.getAbsolutePath(),
-                "-l", props.getLanguage(),
+                "-l", language,
                 "-np",  // no progress
                 "-nt"   // no timestamps
             ));

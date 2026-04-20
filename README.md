@@ -1,5 +1,5 @@
 # Transskribus
-A backend for transcribing (english) speach to text
+A backend for transcribing speach to text. Powered by OpenAI Whisper/Whisper.cpp
 
 ## How to run
 Navigat to the transskribus-folder and run
