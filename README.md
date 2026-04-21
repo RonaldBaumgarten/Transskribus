@@ -12,7 +12,7 @@ To test the application, run the following command from the projects root-folder
 curl -X POST http://localhost:8080/api/transcribe -F "file=@whisper.cpp/samples/jfk.wav"
 ```
 
-If you want to record your own small snippet for testing, if you are on linux and have alsa installed you can use
+If you want to record your own small snippet for testing, if you are on linux with alsa installed you can use
 ```bash
-arecord -d 3 -f cd test.wav && curl -X POST http://localhost:8080/api/transcribe -F "file=@test.wav"
+arecord -d 3 -f cd test.wav && curl -X POST http://localhost:8080/api/transcribe-and-refine -F "file=@test.wav"
 ```
