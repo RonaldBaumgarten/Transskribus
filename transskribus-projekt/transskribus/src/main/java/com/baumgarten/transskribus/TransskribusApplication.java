@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import com.baumgarten.transskribus.config.WhisperProperties;
-import com.baumgarten.transskribus.config.OllamaProperties;
+import com.baumgarten.transskribus.refinement.OllamaProperties;
+import com.baumgarten.transskribus.transcription.WhisperProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties({WhisperProperties.class, OllamaProperties.class})

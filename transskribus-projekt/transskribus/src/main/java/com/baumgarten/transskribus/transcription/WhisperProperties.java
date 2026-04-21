@@ -1,4 +1,4 @@
-package com.baumgarten.transskribus.config;
+package com.baumgarten.transskribus.transcription;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.baumgarten.transskribus;
+package com.baumgarten.transskribus.refinement;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

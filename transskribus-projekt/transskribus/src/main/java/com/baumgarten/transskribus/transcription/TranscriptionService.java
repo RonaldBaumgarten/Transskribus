@@ -1,9 +1,9 @@
-package com.baumgarten.transskribus;
+package com.baumgarten.transskribus.transcription;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.baumgarten.transskribus.config.WhisperProperties;
+import com.baumgarten.transskribus.refinement.OllamaService;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +14,11 @@ import java.util.List;
 public class TranscriptionService {
 
     private final WhisperProperties props;
+    private final OllamaService ollamaService;
 
-    public TranscriptionService(WhisperProperties props) {
+    public TranscriptionService(WhisperProperties props, OllamaService ollama) {
         this.props = props;
+        this.ollamaService = ollama;
     }
 
     public String transcribe(MultipartFile audioFile, String language) throws IOException, InterruptedException {
@@ -49,6 +51,7 @@ public class TranscriptionService {
             ));
 
             return output.trim();
+           
 
         } finally {
             tempInput.delete();

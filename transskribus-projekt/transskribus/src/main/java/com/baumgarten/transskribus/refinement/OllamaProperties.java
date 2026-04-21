@@ -1,4 +1,4 @@
-package com.baumgarten.transskribus.config;
+package com.baumgarten.transskribus.refinement;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

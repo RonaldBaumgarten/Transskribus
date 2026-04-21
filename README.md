@@ -1,5 +1,5 @@
 # Transskribus
-A backend for transcribing speach to text. Powered by OpenAI Whisper/Whisper.cpp
+A backend for transcribing speach to text. Powered by Spring Boot and OpenAI Whisper/Whisper.cpp
 
 ## How to run
 Navigat to the transskribus-folder and run
@@ -14,10 +14,5 @@ curl -X POST http://localhost:8080/api/transcribe -F "file=@whisper.cpp/samples/
 
 If you want to record your own small snippet for testing, if you are on linux and have alsa installed you can use
 ```bash
-arecord -d 3 -f cd test.wav
-```
-and afterwards, with the backend running
-```bash
-curl -X POST http://localhost:8080/api/transcribe -F "file=@test.wav"
-
+arecord -d 3 -f cd test.wav && curl -X POST http://localhost:8080/api/transcribe -F "file=@test.wav"
 ```

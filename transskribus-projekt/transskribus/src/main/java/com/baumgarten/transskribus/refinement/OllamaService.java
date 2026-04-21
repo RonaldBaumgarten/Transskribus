@@ -1,4 +1,4 @@
-package com.baumgarten.transskribus;
+package com.baumgarten.transskribus.refinement;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.util.Map;
-import com.baumgarten.transskribus.config.OllamaProperties;
 
 @Service
 public class OllamaService {
