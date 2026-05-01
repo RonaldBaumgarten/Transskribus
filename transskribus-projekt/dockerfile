@@ -1,0 +1,28 @@
+# Compiling whisper.cpp
+FROM ubuntu:24.04 AS whisper-buil
+RUN apt-get update && apt-get install -y git build-essential cmake
+WORKDIR /whisper
+COPY whisper.cpp/ .
+RUN cmake -B build && cmake --build build --config Release
+
+# Building Spring Boot Project
+FROM eclipse-temurin:25-jdk AS spring-build
+WORKDIR /app
+COPY transskribus/ .
+RUN mvn clean package -DskipTests
+
+# Runtime Image
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y ffmpeg openjdk-25-jre-headless
+
+COPY --from=whisper-build /whisper/build/bin/whisper-cli /opt/whisper/bin/
+COPY --from=whisper-build /whisper/build/src/libwhisper*.so* /opt/whisper/lib/
+COPY --from=whisper-build /whisper/build/ggml/src/libggml*.so* /opt/whisper/lib/
+
+COPY whisper.cpp/models/ /opt/whisper/models
+
+COPY --from=spring-build /app/target/*.jar /app/app.jar
+
+ENV LD_LIBRARY_PATH=/opt/whisper/lib
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
