@@ -1,5 +1,5 @@
 # Transskribus
-A backend for transcribing speech to text. Powered by Spring Boot and OpenAI Whisper/Whisper.cpp
+A backend for transcribing speech to text. Powered by Spring Boot and OpenAI Whisper/Whisper.cpp. Text can be refined with ollama using the mistral-model, wich need s to be running locally on the machine.
 
 ## How to run
 This project uses java version 25
