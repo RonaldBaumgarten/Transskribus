@@ -8,6 +8,7 @@ import com.baumgarten.transskribus.refinement.OllamaService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @Service
@@ -21,7 +22,10 @@ public class TranscriptionService {
         this.ollamaService = ollama;
     }
 
-    public String transcribe(MultipartFile audioFile, String language) throws IOException, InterruptedException {
+    public String transcribe(MultipartFile audioFile, String language, String model) throws IOException, InterruptedException {
+
+		Path modelFile = resolveModel(model);
+		
         // Temporäre Dateien anlegen
         File tempInput = File.createTempFile("audio-input-", getExtension(audioFile.getOriginalFilename()));
         File tempWav = File.createTempFile("audio-wav-", ".wav");
@@ -43,7 +47,7 @@ public class TranscriptionService {
             // Schritt 2: whisper-cli  - WAV-file transkribieren
             String output = runProcessAndCapture(List.of(
                 props.getBinaryPath(),
-                "-m", props.getModelPath(),
+                "-m", modelFile.toString(),
                 "-f", tempWav.getAbsolutePath(),
                 "-l", language,
                 "-np",  // no progress
@@ -87,4 +91,19 @@ public class TranscriptionService {
         int dot = filename.lastIndexOf('.');
         return dot >= 0 ? filename.substring(dot) : ".tmp";
     }
+
+	private Path resolveModel(String model) {
+		String name = (model == null || model.isBlank()) ? props.getDefaultModel() : model;
+
+		// Schutz vor Path Traversal (z.B. "../../etc/passwd")
+		if (!name.matches("[A-Za-z0-9._-]+")) {
+			throw new IllegalArgumentException("Ungültiger Modellname: " + name);
+		}
+
+		Path file = Path.of(props.getModelsDir()).resolve("ggml-" + name + ".bin");
+		if (!Files.exists(file)) {
+    		throw new IllegalArgumentException("Modell nicht gefunden: " + file.toAbsolutePath());
+		}
+		return file;
+	}
 }

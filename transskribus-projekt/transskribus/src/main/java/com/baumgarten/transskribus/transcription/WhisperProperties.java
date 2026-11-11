@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 public class WhisperProperties {
 
     private String binaryPath;
-    private String modelPath;
+    private String modelsDir;
+    private String defaultModel;
     private String language;
     private String ffmpegPath;
     private String libPath;
@@ -16,8 +17,11 @@ public class WhisperProperties {
     public String getBinaryPath() { return binaryPath; }
     public void setBinaryPath(String binaryPath) { this.binaryPath = binaryPath; }
 
-    public String getModelPath() { return modelPath; }
-    public void setModelPath(String modelPath) { this.modelPath = modelPath; }
+    public String getModelsDir() { return modelsDir; }
+    public void setModelsDir(String modelsDir) { this.modelsDir = modelsDir; }
+
+    public String getDefaultModel() { return defaultModel; }
+    public void setDefaultModel(String defaultModel) { this.defaultModel = defaultModel; }
 
     public String getLanguage() { return language; }
     public void setLanguage(String language) { this.language = language; }
